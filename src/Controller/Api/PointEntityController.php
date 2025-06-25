@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 #[Route('/api/points')]
 class PointEntityController extends AbstractController
@@ -20,9 +21,16 @@ class PointEntityController extends AbstractController
         $points = $em->getRepository(PointEntity::class)->findAll();
         $data = array_map(fn($p) => [
            'id'=>$p->getId(),
+           'url'=>$this->generateUrl('point_show', ['id' => $p->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
            'name'=>$p->getName(),
            'description'=>$p->getDescription(),
            'mapNumber'=>$p->getMapNumber(),
+            'lat'=>$p->getLatAttribute(),
+            'lng'=>$p->getLngAttribute(),
+            'bibliographies'=>$p->getBibliographies()->map(fn($b) => [
+                'id' => $b->getId(),
+                'text' => $b->getText(),
+            ])
         ],$points);
         return $this->json($data);
     }
@@ -77,6 +85,12 @@ class PointEntityController extends AbstractController
             'name' => $point->getName(),
             'description' => $point->getDescription(),
             'mapNumber' => $point->getMapNumber(),
+            'lat'=>$point->getLatAttribute(),
+            'lng'=>$point->getLngAttribute(),
+            'bibliographies'=>$point->getBibliographies()->map(fn($b) => [
+                'id' => $b->getId(),
+                'text' => $b->getText(),
+            ])
         ]);
     }
 

@@ -5,9 +5,10 @@ namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'tags')]
-class Tag
+class TagEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,8 +18,14 @@ class Tag
     #[ORM\Column(type: "string", length: 255)]
     private string $value;
 
+
     #[ORM\ManyToMany(targetEntity: RouteEntity::class, mappedBy: "tags")]
     private Collection $routes;
+
+    public function __construct()
+    {
+        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getId(): int { return $this->id; }
 

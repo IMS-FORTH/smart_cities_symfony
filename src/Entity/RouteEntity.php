@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'routes')]
@@ -22,7 +23,7 @@ class RouteEntity
     #[ORM\OneToMany(targetEntity: PointEntity::class, mappedBy: "route")]
     private Collection $points;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'routes')]
+    #[ORM\ManyToMany(targetEntity: TagEntity::class, inversedBy: 'routes')]
     #[ORM\JoinTable(
         name: "route_tag",
         joinColumns: [new ORM\JoinColumn(name: "route_id", referencedColumnName: "id", onDelete: "CASCADE")],
@@ -30,7 +31,12 @@ class RouteEntity
     )]
     private Collection $tags;
 
-    /** @return Collection<int, Tag> */
+    public function __construct()
+    {
+        $this->points = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    /** @return Collection<int, TagEntity> */
     public function getTags(): Collection { return $this->tags; }
     public function getId(): int { return $this->id; }
 

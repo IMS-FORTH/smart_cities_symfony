@@ -48,10 +48,21 @@ class PointEntity
 
     public function getLatAttribute(): ?float
     {
-        return 35.0000;
+
+        if (!$this->id) {
+            return null;
+        }
+
+        $conn = \Doctrine\DBAL\DriverManager::getConnection(['url' => $_ENV['DATABASE_URL']]);
+        return $conn->fetchOne('SELECT ST_Y(location) FROM points WHERE id = ?', [$this->id]);
     }
     public function getLngAttribute(): ?float
     {
-        return 25.0000;
+        if (!$this->id) {
+            return null;
+        }
+
+        $conn = \Doctrine\DBAL\DriverManager::getConnection(['url' => $_ENV['DATABASE_URL']]);
+        return $conn->fetchOne('SELECT ST_X(location) FROM points WHERE id = ?', [$this->id]);
     }
 }

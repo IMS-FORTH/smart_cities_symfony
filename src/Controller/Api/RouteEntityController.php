@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 #[Route('/api/routes')]
 class RouteEntityController extends AbstractController
@@ -18,6 +19,7 @@ class RouteEntityController extends AbstractController
         $routes = $em->getRepository(RouteEntity::class)->findAll();
         $data = array_map(fn($r) => [
             'id' => $r->getId(),
+            'url' => $this->generateUrl('route_show', ['id' => $r->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             'name' => $r->getName(),
             'description' => $r->getDescription(),
             'points' => array_map(function ($point) {
@@ -26,7 +28,8 @@ class RouteEntityController extends AbstractController
                     'name' => $point->getName(),
                     'description' => $point->getDescription(),
                     'mapNumber' => $point->getMapNumber(),
-                    'location' => $point->getLocation(),
+                    'lat'=>$point->getLatAttribute(),
+                    'lng'=>$point->getLngAttribute(),
                 ];
             }, $r->getPoints()->toArray()),
             'tags' => array_map(function ($tag) {
@@ -71,7 +74,8 @@ class RouteEntityController extends AbstractController
                     'name' => $point->getName(),
                     'description' => $point->getDescription(),
                     'mapNumber' => $point->getMapNumber(),
-                    'location' => $point->getLocation(),
+                    'lat'=>$point->getLatAttribute(),
+                    'lng'=>$point->getLngAttribute(),
                 ];
             }, $route->getPoints()->toArray()),
             'tags' => array_map(function ($tag) {
@@ -91,10 +95,12 @@ class RouteEntityController extends AbstractController
         }
         $points = $route->getPoints()->map(fn($p) => [
             'id' => $p->getId(),
+            'url'=>$this->generateUrl('point_show', ['id' => $p->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             'name' => $p->getName(),
             'description' => $p->getDescription(),
             'mapNumber' => $p->getMapNumber(),
-            'location' => $p->getLocation(),
+            'lat'=>$p->getLatAttribute(),
+            'lng'=>$p->getLngAttribute(),
         ]);
         return $this->json($points);
     }
