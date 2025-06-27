@@ -3,6 +3,8 @@
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\PointEntity;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'bibliographies')]
@@ -10,8 +12,8 @@ class Bibliography
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer")]
-    private int $id;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    private Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: PointEntity::class, inversedBy: 'bibliographies')]
     #[ORM\JoinColumn(name: "point_id", referencedColumnName: "id")]
@@ -20,7 +22,7 @@ class Bibliography
     #[ORM\Column(type: "text", length: 255)]
     private string $text;
 
-    public function getId():int
+    public function getId():Uuid
     {
         return $this->id;
     }

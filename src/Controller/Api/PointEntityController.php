@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/api/points')]
 class PointEntityController extends AbstractController
@@ -50,7 +51,7 @@ class PointEntityController extends AbstractController
     }
 
     #[Route('/{id}/geojson',name: 'geojson_single',methods: ['GET'])]
-    public function geojsonSingle(int $id,PointEntityRepository $pointEntityRepository): JsonResponse
+    public function geojsonSingle(Uuid $id,PointEntityRepository $pointEntityRepository): JsonResponse
     {
         $point = $pointEntityRepository->find($id);
         if (!$point) {
@@ -74,7 +75,7 @@ class PointEntityController extends AbstractController
     }
 
     #[Route('/{id}',name: 'point_show',methods: ['GET'])]
-    public function show(int $id,EntityManagerInterface $em): JsonResponse
+    public function show(Uuid $id,EntityManagerInterface $em): JsonResponse
     {
         $point = $em->getRepository(PointEntity::class)->find($id);
         if (!$point) {
@@ -95,7 +96,7 @@ class PointEntityController extends AbstractController
     }
 
     #[Route('/{id}/bibliographies',name: 'point_bibliography',methods: ['GET'])]
-    public function getBibliographyByPoint(int $id,EntityManagerInterface $em): JsonResponse
+    public function getBibliographyByPoint(Uuid $id,EntityManagerInterface $em): JsonResponse
     {
         $point = $em->getRepository(PointEntity::class)->find($id);
         if (!$point) {

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/api/routes')]
 class RouteEntityController extends AbstractController
@@ -58,7 +59,7 @@ class RouteEntityController extends AbstractController
         return $this->json($routes);
     }
     #[Route('/{id}',name: 'route_show',methods: ['GET'])]
-    public function show(int $id,EntityManagerInterface $em): JsonResponse
+    public function show(Uuid $id,EntityManagerInterface $em): JsonResponse
     {
         $route = $em->getRepository(RouteEntity::class)->find($id);
         if (!$route) {
@@ -87,7 +88,7 @@ class RouteEntityController extends AbstractController
         ]);
     }
     #[Route('/{id}/points',name: 'route_points',methods: ['GET'])]
-    public function getPointByRoute(int $id,EntityManagerInterface $em): JsonResponse
+    public function getPointByRoute(Uuid $id,EntityManagerInterface $em): JsonResponse
     {
         $route = $em->getRepository(RouteEntity::class)->find($id);
         if (!$route) {
@@ -105,7 +106,7 @@ class RouteEntityController extends AbstractController
         return $this->json($points);
     }
     #[Route('/{id}/tags',name: 'point_tags',methods: ['GET'])]
-    public function getTagsByPoint(int $id,EntityManagerInterface $em): JsonResponse
+    public function getTagsByPoint(Uuid $id,EntityManagerInterface $em): JsonResponse
     {
         $route = $em->getRepository(RouteEntity::class)->find($id);
         if (!$route) {

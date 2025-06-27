@@ -3,6 +3,8 @@
 namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 
 #[ORM\Entity]
@@ -11,8 +13,8 @@ class PointEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer")]
-    private int $id;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    private Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: RouteEntity::class, inversedBy: 'points')]
     #[ORM\JoinColumn(name: "route_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
@@ -32,7 +34,7 @@ class PointEntity
 
     #[ORM\OneToMany(targetEntity: Bibliography::class, mappedBy: "point")]
     private Collection $bibliographies;
-    public function getId(): int { return $this->id; }
+    public function getId(): Uuid { return $this->id; }
 
     public function getRoute(): RouteEntity { return $this->route; }
     public function setRoute(RouteEntity $route): self { $this->route = $route; return $this; }

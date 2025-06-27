@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/api/tags')]
 class TagEntityController extends AbstractController
@@ -57,7 +58,7 @@ class TagEntityController extends AbstractController
         return $this->json($tags);
     }
     #[Route('/{id}',name: 'tag_show',methods: ['GET'])]
-    public function show(int $id,EntityManagerInterface $em): JsonResponse
+    public function show(Uuid $id,EntityManagerInterface $em): JsonResponse
     {
         $tag = $em->getRepository(TagEntity::class)->find($id);
         if (!$tag) {
@@ -82,7 +83,7 @@ class TagEntityController extends AbstractController
     }
 
     #[Route('/{id}/routes',name: 'tag_routes',methods: ['GET'])]
-    public function getRoutesByTag(int $id,EntityManagerInterface $em): JsonResponse
+    public function getRoutesByTag(Uuid $id,EntityManagerInterface $em): JsonResponse
     {
         $tag = $em->getRepository(TagEntity::class)->find($id);
         if (!$tag) {
