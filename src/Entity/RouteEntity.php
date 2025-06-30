@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'routes')]
 class RouteEntity
@@ -50,4 +51,5 @@ class RouteEntity
 
     /**@return Collection<int, PointEntity>  */
     public function getPoints(): Collection { return $this->points; }
+
 }

@@ -4,6 +4,8 @@ namespace App\Controller\Api;
 
 
 use App\Entity\TagEntity;
+use App\Normalizer\RouteNormalizer;
+use App\Normalizer\TagNormalizer;
 use App\Repository\TagEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,6 +13,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[Route('/api/tags')]
@@ -18,32 +22,16 @@ class TagEntityController extends AbstractController
 {
 
     #[Route('/',name: 'tags_list',methods: ['GET'])]
-    public function index(EntityManagerInterface $em): JsonResponse
+    public function index(EntityManagerInterface $em,TagNormalizer $normalizer): JsonResponse
     {
        $tags = $em->getRepository(TagEntity::class)->findAll();
-       $data = array_map(fn($t) => [
-           'id'=>$t->getId(),
-           'url'=>$this->generateUrl('tag_show', ['id' => $t->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-           'value'=>$t->getValue(),
-           'routes'=>$t->getRoutes()->map(fn($r) => [
-               'id'=>$r->getId(),
-               'url'=>$this->generateUrl('route_show', ['id' => $r->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-               'name'=>$r->getName(),
-               'description'=>$r->getDescription(),
-               'points'=>$r->getPoints()->map(fn($p) => [
-                   'id'=>$p->getId(),
-                   'url'=>$this->generateUrl('point_show', ['id' => $p->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-                   'name'=>$p->getName(),
-                   'description'=>$p->getDescription(),
-                   'mapNumber'=>$p->getMapNumber(),
-               ])->toArray()
-           ])->toArray()
-       ]
-       ,$tags);
+        $data = array_map(/**
+         * @throws ExceptionInterface
+         */ fn($t) => [$normalizer->normalize($t)],$tags);
        return $this->json($data);
     }
     #[Route('/nearby', methods: ['GET'])]
-    public function getNearbyTags(Request $request, TagEntityRepository $tagRepository): JsonResponse
+    public function getNearbyTags(Request $request, TagEntityRepository $tagRepository,TagNormalizer $normalizer): JsonResponse
     {
         $lat = (float) $request->query->get('lat');
         $lng = (float) $request->query->get('lng');
@@ -54,53 +42,31 @@ class TagEntityController extends AbstractController
         }
 
         $tags = $tagRepository->findNearbyTags($lng, $lat, $radius);
-
         return $this->json($tags);
     }
+
+    /**
+     * @throws ExceptionInterface
+     */
     #[Route('/{id}',name: 'tag_show',methods: ['GET'])]
-    public function show(Uuid $id,EntityManagerInterface $em): JsonResponse
+    public function show(Uuid $id,EntityManagerInterface $em,TagNormalizer $normalizer): JsonResponse
     {
         $tag = $em->getRepository(TagEntity::class)->find($id);
         if (!$tag) {
             return $this->json(['error' => 'Tag not found'], 404);
         }
-        return $this->json([
-            'id' => $tag->getId(),
-            'value' => $tag->getValue(),
-            'routes'=>$tag->getRoutes()->map(fn($r) => [
-                'id'=>$r->getId(),
-                'url'=>$this->generateUrl('route_show', ['id' => $r->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-                'name'=>$r->getName(),
-                'description'=>$r->getDescription(),
-                'points'=>$r->getPoints()->map(fn($p) => [
-                    'id'=>$p->getId(),
-                    'url'=>$this->generateUrl('point_show', ['id' => $p->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-                    'name'=>$p->getName(),
-                    'description'=>$p->getDescription(),
-                ])
-            ])
-        ]);
+        $data = $normalizer->normalize($tag);
+        return $this->json($data);
     }
 
     #[Route('/{id}/routes',name: 'tag_routes',methods: ['GET'])]
-    public function getRoutesByTag(Uuid $id,EntityManagerInterface $em): JsonResponse
+    public function getRoutesByTag(Uuid $id,EntityManagerInterface $em,RouteNormalizer $normalizer): JsonResponse
     {
         $tag = $em->getRepository(TagEntity::class)->find($id);
         if (!$tag) {
             return $this->json(['error' => 'Tag not found'], 404);
         }
-        $routes = $tag->getRoutes()->map(fn($r) => [
-            'id'=>$r->getId(),
-            'url'=>$this->generateUrl('route_show', ['id' => $r->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-            'name'=>$r->getName(),
-            'description'=>$r->getDescription(),
-            'points'=>$r->getPoints()->map(fn($p) => [
-                'id'=>$p->getId(),
-                'url'=>$this->generateUrl('point_show', ['id' => $p->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-                'name'=>$p->getName(),
-                'description'=>$p->getDescription(),
-            ])
-        ]);
+        $routes = $tag->getRoutes()->map(fn($r) => [$normalizer->normalize($r)]);
         return $this->json($routes);
     }
 }

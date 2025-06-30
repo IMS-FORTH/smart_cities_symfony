@@ -67,4 +67,28 @@ class PointEntity
         $conn = \Doctrine\DBAL\DriverManager::getConnection(['url' => $_ENV['DATABASE_URL']]);
         return $conn->fetchOne('SELECT ST_X(location) FROM points WHERE id = ?', [$this->id]);
     }
+
+    /*
+    public function normalizePoint($options = false): array
+    {
+        $data=[
+            'id' => $this->id,
+            'route_id' => $this->route->getId(),
+            'name' => $this->name,
+            'description' => $this->description,
+            'map_number' => $this->mapNumber,
+            'lat' => $this->getLatAttribute(),
+            'lng' => $this->getLngAttribute(),
+        ];
+        if($options === true){
+            $data['bibliographies'] = $this->getBibliographies()->map(fn($b) => [
+                'id' => $b->getId(),
+                'text' => $b->getText(),
+            ]);
+        }
+        return $data;
+    }
+    */
+
+
 }
