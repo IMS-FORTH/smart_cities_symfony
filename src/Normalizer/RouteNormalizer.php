@@ -34,7 +34,7 @@ class RouteNormalizer implements NormalizerInterface
                 ]),
             'tags' => $data->getTags()->map(fn($t) => [
                 'id' => $t->getId(),
-                'value' => $t->getValue(),
+                'name' => $t->getName(),
                 'url' => $this->urlGenerator->generate('tag_show', ['id' => $t->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
                 ]),
             ];

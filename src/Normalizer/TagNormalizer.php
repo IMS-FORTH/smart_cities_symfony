@@ -23,7 +23,7 @@ class TagNormalizer implements NormalizerInterface
         }
         return [
             'id' => $data->getId(),
-            'value' => $data->getValue(),
+            'name' => $data->getName(),
             'url' => $this->urlGenerator->generate('tag_show', ['id' => $data->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             'routes' => $data->getRoutes()->map(fn($r) => [
                 'id' => $r->getId(),

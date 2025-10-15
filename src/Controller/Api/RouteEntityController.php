@@ -98,7 +98,7 @@ class RouteEntityController extends AbstractController
         $tags = $route->getTags()->map(fn($t) => [
             'id' => $t->getId(),
             'url'=>$this->generateUrl('tag_show', ['id' => $t->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-            'value' => $t->getValue(),
+            'name' => $t->getName(),
         ]);
         return $this->json($tags);
     }

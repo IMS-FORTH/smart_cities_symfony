@@ -18,7 +18,7 @@ class TagEntity
     private Uuid $id;
 
     #[ORM\Column(type: "string", length: 255)]
-    private string $value;
+    private string $name;
 
 
     #[ORM\ManyToMany(targetEntity: RouteEntity::class, mappedBy: "tags")]
@@ -31,7 +31,7 @@ class TagEntity
 
     public function getId(): Uuid { return $this->id; }
 
-    public function getValue(): string { return $this->value; }
+    public function getName(): string { return $this->name; }
 
 
     /** @return Collection<int, RouteEntity> */
