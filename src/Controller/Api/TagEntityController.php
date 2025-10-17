@@ -30,7 +30,7 @@ class TagEntityController extends AbstractController
          */ fn($t) => [$normalizer->normalize($t)],$tags);
        return $this->json($data);
     }
-    #[Route('/nearby', methods: ['GET'])]
+    #[Route('/nearby',name: 'tags_nearby' ,methods: ['GET'])]
     public function getNearbyTags(Request $request, TagEntityRepository $tagRepository,TagNormalizer $normalizer): JsonResponse
     {
         $lat = (float) $request->query->get('lat');

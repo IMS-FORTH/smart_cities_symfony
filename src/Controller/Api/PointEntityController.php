@@ -31,7 +31,7 @@ class PointEntityController extends AbstractController
     /**
      * @throws ExceptionInterface
      */
-    #[Route('/geojson',name: 'geojson_all',methods: ['GET'])]
+    #[Route('/geojson',name: 'points_geojson',methods: ['GET'])]
     public function geojsonAll(EntityManagerInterface $em,PointEntityRepository $pointEntityRepository,PointNormalizer $normalizer): JsonResponse
     {
         $points = $em->getRepository(PointEntity::class)->findAll();
@@ -48,7 +48,7 @@ class PointEntityController extends AbstractController
     /**
      * @throws ExceptionInterface
      */
-    #[Route('/{id}/geojson',name: 'geojson_single',methods: ['GET'])]
+    #[Route('/{id}/geojson',name: 'point_geojson',methods: ['GET'])]
     public function geojsonSingle(Uuid $id,PointEntityRepository $pointEntityRepository,PointNormalizer $normalizer): JsonResponse
     {
         $point = $pointEntityRepository->find($id);
@@ -98,9 +98,6 @@ class PointEntityController extends AbstractController
         ]);
         return $this->json($bibliography);
     }
-
-
-
 
 
 }
