@@ -41,6 +41,9 @@ All `nearby` endpoints accept:
 
 ## Schemas
     
+<details>
+<summary><strong>Routes</strong> (click to expand)</summary>
+
 ### Route (as returned by `GET /api/routes/{id}`)
 ```json
 [
@@ -113,5 +116,5 @@ All `nearby` endpoints accept:
     {}
 ]
 ```
-
+</details>
 
