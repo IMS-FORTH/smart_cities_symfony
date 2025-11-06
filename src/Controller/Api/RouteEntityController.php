@@ -85,7 +85,7 @@ class RouteEntityController extends AbstractController
         if (!$route) {
             return $this->json(['error' => 'Route not found'], 404);
         }
-        $points = $route->getPoints()->map(fn($p) => [$normalizer->normalize($p)]);
+        $points = $route->getPoints()->map(fn($p) => $normalizer->normalize($p));
         return $this->json($points);
     }
     #[Route('/{id}/tags',name: 'route_tags',methods: ['GET'])]

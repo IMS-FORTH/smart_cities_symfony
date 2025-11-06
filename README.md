@@ -55,12 +55,12 @@ All `nearby` endpoints accept:
             "url": "string-url",
             "name": "string",
             "description": "string (HTML)"
-        }
-        // ...more points
+        },
+        {}
     ],
     "tags": [
-        { "id": "string-uuid", "name": "string", "url": "string-url" }
-        // ...more tags
+        { "id": "string-uuid", "name": "string", "url": "string-url" }, 
+        {}
     ]
 }]
 ```
@@ -69,7 +69,6 @@ All `nearby` endpoints accept:
 ### Route → Points (as returned by GET /api/routes/{id}/points)
 ```json
 [
-    [
         {
             "id": "string-uuid",
             "url": "string-url",
@@ -79,13 +78,8 @@ All `nearby` endpoints accept:
             "map_number": 0,
             "lat": 0.0,
             "lng": 0.0
-        }
-    ],
-    [ {} ],
-    [ {} ],
-    [ {} ],
-    [ {} ],
-    [ {} ]
+        },  
+     {} 
 ]
 ```
 
@@ -106,7 +100,7 @@ All `nearby` endpoints accept:
                 "mapNumber": 0
             }
         },
-        // ...more features 
+        {}
     ]
 }
 ```
@@ -116,7 +110,7 @@ All `nearby` endpoints accept:
 ```json
 [
     { "id": "string-uuid", "url": "string-url", "name": "string" },
-    // ...more tags
+    {}
 ]
 ```
 
