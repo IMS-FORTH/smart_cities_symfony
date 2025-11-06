@@ -1,7 +1,5 @@
 <p align="center"><a href="https://symfony.com" target="_blank"><img src="https://symfony.com/logos/symfony_black_03.svg" width="400" alt="Symfony Logo"></a></p>
 
-
-
 ## API Endpoints
 
 ### Routes
@@ -17,7 +15,7 @@
 - `GET /api/points/{id}` - Get specific point details
 - `GET /api/points/geojson` - Get all points as GeoJSON feature collection
 - `GET /api/points/{id}/geojson` - Get specific point as GeoJSON feature
-- `GET /api/points/nearby?lng={lng}&lat={lat}&radius={meters}` — points within radius (meters)
+- `GET /api/points/nearby?lng={lng}&lat={lat}&radius={meters}` —Get points within radius (meters)
 - `GET /api/points/{id}/bibliographies` —GET bibliographies of a point
 
 ### Tags
@@ -26,7 +24,7 @@
 - `GET /api/tags/{id}/routes` — routes that have this tag
 - `GET /api/tags/nearby?lng={lng}&lat={lat}&radius={meters}` — tags near location
 
-## Nearby parameters
+### Nearby parameters
 
 All `nearby` endpoints accept:
 - `lng` — longitude (decimal)
@@ -42,7 +40,7 @@ All `nearby` endpoints accept:
 ## Schemas
     
 <details>
-<summary><strong>Routes</strong> (click to expand)</summary>
+    <summary><strong>Routes</strong> (click to expand)</summary>
 
 ### Route (as returned by `GET /api/routes/{id}`)
 ```json
@@ -118,3 +116,10 @@ All `nearby` endpoints accept:
 ```
 </details>
 
+<details>
+<summary><strong>Points</strong> (click to expand)</summary>
+
+
+
+
+</details>
