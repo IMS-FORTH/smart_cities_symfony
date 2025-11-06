@@ -8,21 +8,21 @@
 - `GET /api/routes/{id}/points` - Get points belonging to a route
 - `GET /api/routes/{id}/tags` - Get tags associated with a route
 - `GET /api/routes/{id}/geojson` —Get route points as GeoJSON FeatureCollection
-- `GET /api/routes/nearby?lng={lng}&lat={lat}&radius={meters}` —Get routes within radius (meters)
+- `GET /api/routes/nearby?lng={lng}&lat={lat}&radius={meters}` —Get routes within radius (meters) based on Latitude, Longitude
 
 ### Points
 - `GET /api/points` - List all points
-- `GET /api/points/{id}` - Get specific point details
+- `GET /api/points/{id}` - Get specific point details by id
 - `GET /api/points/geojson` - Get all points as GeoJSON feature collection
 - `GET /api/points/{id}/geojson` - Get specific point as GeoJSON feature
-- `GET /api/points/nearby?lng={lng}&lat={lat}&radius={meters}` —Get points within radius (meters)
+- `GET /api/points/nearby?lng={lng}&lat={lat}&radius={meters}` —Get points within radius (meters) based on Latitude, Longitude
 - `GET /api/points/{id}/bibliographies` —GET bibliographies of a point
 
 ### Tags
-- `GET /api/tags/` — list tags
-- `GET /api/tags/{id}` — tag by id
-- `GET /api/tags/{id}/routes` — routes that have this tag
-- `GET /api/tags/nearby?lng={lng}&lat={lat}&radius={meters}` — tags near location
+- `GET /api/tags/` — List all tags
+- `GET /api/tags/{id}` — Get specific tag details by id
+- `GET /api/tags/{id}/routes` —Get routes that have this tag
+- `GET /api/tags/nearby?lng={lng}&lat={lat}&radius={meters}` —Get tags within radius (meters) based on Latitude, Longitude
 
 ### Nearby parameters
 
