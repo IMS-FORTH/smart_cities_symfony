@@ -27,7 +27,7 @@ class TagEntityController extends AbstractController
        $tags = $em->getRepository(TagEntity::class)->findAll();
         $data = array_map(/**
          * @throws ExceptionInterface
-         */ fn($t) => [$normalizer->normalize($t)],$tags);
+         */ fn($t) => $normalizer->normalize($t),$tags);
        return $this->json($data);
     }
     #[Route('/nearby',name: 'tags_nearby' ,methods: ['GET'])]
@@ -66,7 +66,7 @@ class TagEntityController extends AbstractController
         if (!$tag) {
             return $this->json(['error' => 'Tag not found'], 404);
         }
-        $routes = $tag->getRoutes()->map(fn($r) => [$normalizer->normalize($r)]);
+        $routes = $tag->getRoutes()->map(fn($r) => $normalizer->normalize($r));
         return $this->json($routes);
     }
 }

@@ -63,9 +63,11 @@ All `nearby` endpoints accept:
         { "id": "string-uuid", "name": "string", "url": "string-url" }, 
         {}
     ]
-}]
+  }
+]
 ```
-
+### Routes List (returned by `GET /api/routes/`)
+> Returns an array of `Route` objects; 
 
 ### Route → Points (as returned by GET /api/routes/{id}/points)
 ```json
@@ -118,6 +120,169 @@ All `nearby` endpoints accept:
 
 <details>
 <summary><strong>Points</strong> (click to expand)</summary>
+
+### Point (returned by `GET /api/points/{id}` and in lists)
+```json
+{
+  "id": "string-uuid",
+  "url": "string-url",
+  "route_id": "string-uuid",
+  "name": "string",
+  "description": "string (HTML)",
+  "map_number": null,
+  "lat": 0.0,
+  "lng": 0.0,
+  "bibliographies": [
+    { "id": "string-uuid", "text": "string (HTML)" },
+      {}
+  ]
+}
+```
+
+### Points List (returned by `GET /api/points/`)
+> Returns an array of `Point` objects; 
+
+### Point → Bibliographies (returned by `GET /api/points/{id}/bibliographies`)
+```json
+[
+  { "id": "string-uuid", "text": "string (HTML)" },
+    {}
+]
+```
+
+### Points GeoJSON (returned by `GET /api/points/geojson`)
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [0.0, 0.0] },
+      "properties": {
+        "id": "string-uuid",
+        "url": "string-url",
+        "route_id": "string-uuid",
+        "name": "string",
+        "description": "string (HTML)",
+        "mapNumber": null
+      }
+    },{}
+  ]
+}
+```
+
+### Single Point GeoJSON (returned by `GET /api/points/{id}/geojson`)
+```json
+{
+  "type": "Feature",
+  "geometry": { "type": "Point", "coordinates": [0.0, 0.0] },
+  "properties": {
+    "id": "string-uuid",
+    "url": "string-url",
+    "route_id": "string-uuid",
+    "name": "string",
+    "description": "string (HTML)",
+    "mapNumber": null
+  }
+}
+```
+
+### Points Nearby (returned by `GET /api/points/nearby?lng=&lat=&radius=`)
+```json
+[
+  {
+    "id_number": 0,
+    "route_id_number": 0,
+    "name": "string",
+    "map_number": "string",
+    "location": "string (WKB/EWKB hex)",
+    "description": "string (HTML)",
+    "id": "string-uuid",
+    "route_id": "string-uuid",
+    "distance": 0.0
+  },{}
+]
+```
+
+</details>
+
+<details>
+  <summary><strong>Tags</strong> (click to expand)</summary>
+
+### Tag List (returned by `GET /api/tags/`)
+```json
+[
+  {
+    "id": "string-uuid",
+    "name": "string",
+    "url": "string-url",
+    "routes": [
+      {
+        "id": "string-uuid",
+        "url": "string-url",
+        "name": "string",
+        "description": "string (HTML)",
+        "points": [{},{}]
+      },
+        {}
+    ]
+  }
+]
+```
+
+### Tag (returned by `GET /api/tags/{id}`)
+```json
+ {
+    "id": "string-uuid",
+    "name": "string",
+    "url": "string-url",
+    "routes": [
+      {
+        "id": "string-uuid",
+        "url": "string-url",
+        "name": "string",
+        "description": "string (HTML)",
+        "points": [{},{}]
+      },
+        {}
+    ]
+  }
+
+```
+
+
+### Tag → Routes (returned by `GET /api/tags/{id}/routes`)
+```json
+[
+    {
+    "id": "string-uuid",
+    "url": "string-url",
+    "name": "string",
+    "description": "string (HTML)",
+    "points": [
+        {
+            "id": "string-uuid",
+            "url": "string-url",
+            "name": "string",
+            "description": "string (HTML)"
+        },
+        {}
+    ],
+    "tags": [
+        { "id": "string-uuid", "name": "string", "url": "string-url" }, 
+        {}
+    ]
+  }
+]
+```
+
+### Tags Nearby (returned by `GET /api/tags/nearby?lng=&lat=&radius=`)
+```json
+[
+  { "id_number": 0, "name": "string", "id": "string-uuid" },
+    {}
+]
+```
 
 
 

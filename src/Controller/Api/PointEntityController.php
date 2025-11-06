@@ -22,7 +22,7 @@ class PointEntityController extends AbstractController
         $points = $em->getRepository(PointEntity::class)->findAll();
         $data = array_map(/**
          * @throws ExceptionInterface
-         */ fn($p) => [$normalizer->normalize($p,context: ['with_bibliography'=>true])],$points);
+         */ fn($p) => $normalizer->normalize($p,context: ['with_bibliography'=>true]),$points);
         return $this->json($data);
     }
 
