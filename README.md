@@ -40,11 +40,11 @@ All `nearby` endpoints accept:
 - Tags: `/api/tags/nearby?lng=25.8691&lat=35.0034&radius=1000`
 
 ## Schemas
-
     
 ### Route (as returned by `GET /api/routes/{id}`)
 ```json
-[{
+[
+    {
     "id": "string-uuid",
     "url": "string-url",
     "name": "string",
