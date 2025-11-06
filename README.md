@@ -1,4 +1,4 @@
-<p align="center"><a href="https://symfony.com" target="_blank"><img src="https://symfony.com/logos/symfony_black_03.svg" width="400" alt="Symfony Logo"></a></p>
+<p align="center"><a href="https://www.smartcitiesecosystem.gr/" target="_blank"><img src="https://www.smartcitiesecosystem.gr/" width="200" height="200" alt="Smart Cities Logo"></a></p>
 
 ## API Endpoints
 
@@ -45,23 +45,27 @@ All `nearby` endpoints accept:
 ### Route (as returned by `GET /api/routes/{id}`)
 ```json
 [
-    {
+  {
     "id": "string-uuid",
     "url": "string-url",
     "name": "string",
     "description": "string (HTML)",
     "points": [
-        {
-            "id": "string-uuid",
-            "url": "string-url",
-            "name": "string",
-            "description": "string (HTML)"
-        },
-        {}
+      {
+        "id": "string-uuid",
+        "url": "string-url",
+        "name": "string",
+        "description": "string (HTML)"
+      },
+      {}
     ],
     "tags": [
-        { "id": "string-uuid", "name": "string", "url": "string-url" }, 
-        {}
+      {
+        "id": "string-uuid",
+        "name": "string",
+        "url": "string-url"
+      },
+      {}
     ]
   }
 ]
@@ -72,16 +76,16 @@ All `nearby` endpoints accept:
 ### Route → Points (as returned by GET /api/routes/{id}/points)
 ```json
 [
-        {
-            "id": "string-uuid",
-            "url": "string-url",
-            "route_id": "string-uuid",
-            "name": "string",
-            "description": "string (HTML)",
-            "map_number": 0,
-            "lat": 0.0,
-            "lng": 0.0
-        },  
+    {
+        "id": "string-uuid",
+        "url": "string-url",
+        "route_id": "string-uuid",
+        "name": "string",
+        "description": "string (HTML)",
+        "map_number": 0,
+        "lat": 0.0,
+        "lng": 0.0
+    },  
      {} 
 ]
 ```
@@ -166,7 +170,8 @@ All `nearby` endpoints accept:
         "description": "string (HTML)",
         "mapNumber": null
       }
-    },{}
+    },
+      {}
   ]
 }
 ```
@@ -283,8 +288,5 @@ All `nearby` endpoints accept:
     {}
 ]
 ```
-
-
-
 
 </details>
