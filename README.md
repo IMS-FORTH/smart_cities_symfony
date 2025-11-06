@@ -1,4 +1,4 @@
-<p align="center"><a href="https://www.smartcitiesecosystem.gr/" target="_blank"><img src="https://www.smartcitiesecosystem.gr/" width="200" height="200" alt="Smart Cities Logo"></a></p>
+<p align="center"><a href="https://www.smartcitiesecosystem.gr/" target="_blank"><img src="public/images/logo.png" width="200" height="200" alt="Smart Cities Logo"></a></p>
 
 ## API Endpoints
 
